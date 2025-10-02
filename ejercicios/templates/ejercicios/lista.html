@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Ejercicios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 95%;          /* Hacemos la tabla más ancha */
+            max-width: 1200px;   /* Máximo ancho para pantallas grandes */
+            margin: 50px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        a.btn {
+            display: inline-block;
+            padding: 8px 15px;
+            margin-bottom: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            color: white;
+            background-color: #4CAF50;
+            transition: background 0.3s;
+        }
+        a.btn:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Mantener columnas proporcionales */
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            word-wrap: break-word; /* Evita que el texto se desborde */
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-edit {
+            background: #2196F3;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 10px;   /* Separa los botones */
+            display: inline-block;
+        }
+        .btn-delete {
+            background: #f44336;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        @media screen and (max-width: 768px) {
+            table, th, td {
+                font-size: 14px;   /* Más pequeño en pantallas chicas */
+            }
+            .btn-edit, .btn-delete {
+                padding: 5px 8px;
+                margin-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Ejercicios</h1>
+        <a href="{% url 'crear_ejercicio' %}" class="btn">Agregar Ejercicio</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Nivel</th>
+                    <th style="width:200px;">Acciones</th> <!-- Columna más ancha -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for ejercicio in ejercicios %}
+                <tr>
+                    <td>{{ ejercicio.nombre }}</td>
+                    <td>{{ ejercicio.descripcion }}</td>
+                    <td>{{ ejercicio.nivel }}</td>
+                    <td>
+                        <a href="{% url 'editar_ejercicio' ejercicio.id %}" class="btn-edit">Editar</a>
+                        <a href="{% url 'eliminar_ejercicio' ejercicio.id %}" class="btn-delete">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align:center;">No hay ejercicios aún.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
